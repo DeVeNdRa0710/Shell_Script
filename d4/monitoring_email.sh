@@ -6,7 +6,7 @@ check_url="http://localhost:5000/api/health"
 log_file="/var/log/automate_server.log"
 alert_email="jaybantv@gmail.com"
 threshold=3
-retry_interval=5
+retry_interval=1
 failure_count=0
 timestamp=$(date)
 failure_count_file="/tmp/server_failure_count"
@@ -31,7 +31,7 @@ send_alert() {
 
 perform_check(){
     timeout 5 bash -c "echo > /dev/tcp/$host/$port" > /dev/null 2>&1
-    
+
     if [ $? -ne 0 ] ; then
                 failure_count=$((failure_count+1))
                 echo "$failure_count" > "$failure_count_file"
